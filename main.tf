@@ -5,8 +5,8 @@ locals {
   parameter_group_name    = var.parameter_group_name != "" ? var.parameter_group_name : var.identifier
   parameter_group_name_id = var.parameter_group_name != "" ? var.parameter_group_name : module.db_parameter_group.this_db_parameter_group_id
 
-  final_snapshot_string         = var.identifier + "-final"
-  final_snapshot_identifier     = var.final_snapshot_identifier != "" ? var.final_snapshot_identifier : loca.final_snapshot_string
+  final_snapshot_string         = "${var.identifier}-final"
+  final_snapshot_identifier     = var.final_snapshot_identifier != "" ? var.final_snapshot_identifier : local.final_snapshot_string
   enable_create_db_option_group = var.create_db_option_group ? true : var.option_group_name == "" && var.engine != "postgres"
 
   option_group_name             = var.option_group_name != "" ? var.option_group_name : module.db_option_group.this_db_option_group_id
@@ -71,7 +71,7 @@ module "db_instance" {
   engine_version        = var.engine_version
   instance_class        = var.instance_class
   allocated_storage     = var.allocated_storage
-  max_allocated_storage = loval.max_allocated_storage
+  max_allocated_storage = local.max_allocated_storage
   storage_type          = var.storage_type
   storage_encrypted     = var.storage_encrypted
   kms_key_id            = var.kms_key_id == null && var.storage_encrypted == true ? data.aws_kms_alias.kms_key_rds.target_key_id : var.kms_key_id
