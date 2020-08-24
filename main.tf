@@ -134,7 +134,7 @@ module "db_instance" {
   #tags = var.tags
 
   tags = merge(
-    local.common_tags,
+    var.tags,
     {
       "TestData"                = data.aws_iam_role.rds_enhanced_monitoring_role.arn
     },
