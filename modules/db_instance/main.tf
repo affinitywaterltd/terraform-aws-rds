@@ -1,5 +1,6 @@
 locals {
   is_mssql = element(split("-", var.engine), 0) == "sqlserver"
+  
 }
 
 data "aws_iam_policy_document" "enhanced_monitoring" {

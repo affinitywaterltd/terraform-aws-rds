@@ -167,7 +167,7 @@ variable "monitoring_role_arn" {
 variable "monitoring_role_name" {
   description = "Name of the IAM role which will be created when create_monitoring_role is enabled."
   type        = string
-  default     = "rds-monitoring-role"
+  default     = "rds-enhanced-monitoring-role"
 }
 
 variable "create_monitoring_role" {

@@ -158,6 +158,12 @@ variable "publicly_accessible" {
   default     = false
 }
 
+variable "monitoring_interval_override" {
+  description = "Determined if the default monitoring interval applied or use the specified value"
+  type        = bool
+  default     = false
+}
+
 variable "monitoring_interval" {
   description = "The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid Values: 0, 1, 5, 10, 15, 30, 60."
   type        = number
@@ -343,7 +349,7 @@ variable "deletion_protection" {
 variable "performance_insights_enabled" {
   description = "Specifies whether Performance Insights are enabled"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "performance_insights_retention_period" {
@@ -369,3 +375,4 @@ variable "delete_automated_backups" {
   type        = bool
   default     = false
 }
+
