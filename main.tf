@@ -2,7 +2,7 @@ locals {
   db_subnet_group_name          = var.db_subnet_group_name != "" ? var.db_subnet_group_name : module.db_subnet_group.this_db_subnet_group_id
   enable_create_db_subnet_group = var.db_subnet_group_name == "" ? var.create_db_subnet_group : false
 
-  parameter_group_name    = var.parameter_group_name != "" ? var.parameter_group_name : "rds-parameter-group-${var.engine}-${var.major_engine_version}-${var.identifier}"
+  parameter_group_name    = var.parameter_group_name != "" ? var.parameter_group_name : "${var.engine}-rds-parameter-group-${var.major_engine_version}-${var.identifier}"
   parameter_group_name_id = var.parameter_group_name != "" ? var.parameter_group_name : module.db_parameter_group.this_db_parameter_group_id
 
   final_snapshot_string         = "${var.identifier}-final"
@@ -34,7 +34,7 @@ module "db_parameter_group" {
 
   create          = var.create_db_parameter_group
   identifier      = var.identifier
-  name            = var.parameter_group_name
+  name            = local.parameter_group_name
   description     = var.parameter_group_description
   family          = "${var.engine}-${var.major_engine_version}"
 
