@@ -340,12 +340,6 @@ variable "deletion_protection" {
   default     = true
 }
 
-variable "use_parameter_group_name_prefix" {
-  description = "Whether to use the parameter group name prefix or not"
-  type        = bool
-  default     = true
-}
-
 variable "performance_insights_enabled" {
   description = "Specifies whether Performance Insights are enabled"
   type        = bool

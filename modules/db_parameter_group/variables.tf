@@ -16,12 +16,6 @@ variable "name" {
   default     = ""
 }
 
-variable "name_prefix" {
-  description = "Creates a unique name beginning with the specified prefix"
-  type        = string
-  default     = ""
-}
-
 variable "identifier" {
   description = "The identifier of the resource"
   type        = string
@@ -43,10 +37,3 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
-
-variable "use_name_prefix" {
-  description = "Whether to use name_prefix or not"
-  type        = bool
-  default     = true
-}
-
