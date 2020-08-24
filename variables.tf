@@ -226,7 +226,7 @@ variable "backup_retention_period" {
 variable "backup_window" {
   description = "The daily time range (in UTC) during which automated backups are created if they are enabled. Example: '09:46-10:16'. Must not overlap with maintenance_window"
   type        = string
-  default     = "2300-0000"
+  default     = "23:00-00:00"
 }
 
 variable "tags" {
