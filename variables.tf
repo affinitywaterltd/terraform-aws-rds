@@ -226,7 +226,7 @@ variable "skip_final_snapshot" {
 variable "copy_tags_to_snapshot" {
   description = "On delete, copy all Instance tags to the final snapshot (if final_snapshot_identifier is specified)"
   type        = bool
-  default     = false
+  default     = true
 }
 
 

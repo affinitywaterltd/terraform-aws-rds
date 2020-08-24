@@ -109,7 +109,7 @@ module "db_instance" {
   maintenance_window          = var.maintenance_window
   skip_final_snapshot         = var.skip_final_snapshot
   copy_tags_to_snapshot       = var.copy_tags_to_snapshot
-  final_snapshot_identifier   = var.final_snapshot_identifier
+  final_snapshot_identifier   = local.final_snapshot_identifier
 
   performance_insights_enabled          = var.performance_insights_enabled
   performance_insights_retention_period = var.performance_insights_retention_period
