@@ -376,3 +376,9 @@ variable "delete_automated_backups" {
   default     = false
 }
 
+
+variable "environemnt" {
+  description = "Specifies the environment (e.g. prod or dev)"
+  type        = string
+}
+
