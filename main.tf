@@ -6,7 +6,7 @@ locals {
   parameter_group_name_id = var.parameter_group_name != "" ? var.parameter_group_name : module.db_parameter_group.this_db_parameter_group_id
 
   final_snapshot_string         = "${var.identifier}-final"
-  final_snapshot_identifier     = var.final_snapshot_identifier != "" ? var.final_snapshot_identifier : local.final_snapshot_string
+  final_snapshot_identifier     = var.final_snapshot_identifier != null ? var.final_snapshot_identifier : local.final_snapshot_string
   enable_create_db_option_group = var.create_db_option_group ? true : var.option_group_name == "" && var.engine != "postgres"
 
   option_group_name           = var.option_group_name != "" ? var.option_group_name : "${var.engine}-${var.major_engine_version}-rds-option-group-${var.identifier}"
