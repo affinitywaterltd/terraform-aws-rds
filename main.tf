@@ -5,9 +5,18 @@ locals {
   parameter_group_name    = var.parameter_group_name != "" ? var.parameter_group_name : var.identifier
   parameter_group_name_id = var.parameter_group_name != "" ? var.parameter_group_name : module.db_parameter_group.this_db_parameter_group_id
 
-  option_group_name             = var.option_group_name != "" ? var.option_group_name : module.db_option_group.this_db_option_group_id
+  final_snapshot_string         = var.identifier + "-final"
+  final_snapshot_identifier     = var.final_snapshot_identifier != "" ? var.final_snapshot_identifier : loca.final_snapshot_string
   enable_create_db_option_group = var.create_db_option_group ? true : var.option_group_name == "" && var.engine != "postgres"
+
+  option_group_name             = var.option_group_name != "" ? var.option_group_name : module.db_option_group.this_db_option_group_id
+  max_allocated_storage = var.allocated_storage * 1.5
 }
+
+data "aws_kms_alias" "kms_key_rds" {
+  name = "alias/aws/rds"
+}
+
 
 module "db_subnet_group" {
   source = "./modules/db_subnet_group"
@@ -56,16 +65,17 @@ module "db_option_group" {
 module "db_instance" {
   source = "./modules/db_instance"
 
-  create            = var.create_db_instance
-  identifier        = var.identifier
-  engine            = var.engine
-  engine_version    = var.engine_version
-  instance_class    = var.instance_class
-  allocated_storage = var.allocated_storage
-  storage_type      = var.storage_type
-  storage_encrypted = var.storage_encrypted
-  kms_key_id        = var.kms_key_id
-  license_model     = var.license_model
+  create                = var.create_db_instance
+  identifier            = var.identifier
+  engine                = var.engine
+  engine_version        = var.engine_version
+  instance_class        = var.instance_class
+  allocated_storage     = var.allocated_storage
+  max_allocated_storage = loval.max_allocated_storage
+  storage_type          = var.storage_type
+  storage_encrypted     = var.storage_encrypted
+  kms_key_id            = var.kms_key_id == null && var.storage_encrypted == true ? data.aws_kms_alias.kms_key_rds.target_key_id : var.kms_key_id
+  license_model         = var.license_model
 
   name                                = var.name
   username                            = var.username
@@ -104,7 +114,6 @@ module "db_instance" {
 
   backup_retention_period = var.backup_retention_period
   backup_window           = var.backup_window
-  max_allocated_storage   = var.max_allocated_storage
   monitoring_interval     = var.monitoring_interval
   monitoring_role_arn     = var.monitoring_role_arn
   monitoring_role_name    = var.monitoring_role_name
