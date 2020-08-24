@@ -18,6 +18,9 @@ data "aws_kms_alias" "kms_key_rds" {
   name = "alias/aws/rds"
 }
 
+data "aws_iam_role" "rds_enhanced_monitoring_role" {
+  name = "rds-enhanced-monitoring-role"
+}
 
 module "db_subnet_group" {
   source = "./modules/db_subnet_group"
@@ -114,7 +117,7 @@ module "db_instance" {
   backup_retention_period = var.backup_retention_period
   backup_window           = var.backup_window
   monitoring_interval     = var.monitoring_interval_override == false && var.environment =="prod" ? 60 : var.monitoring_interval
-  monitoring_role_arn     = var.monitoring_role_arn
+  monitoring_role_arn     = var.monitoring_role_arn != "" ? data.aws_iam_role.rds_enhanced_monitoring_role.arn : var.monitoring_role_arn
   monitoring_role_name    = var.monitoring_role_name
   create_monitoring_role  = var.create_monitoring_role
 
