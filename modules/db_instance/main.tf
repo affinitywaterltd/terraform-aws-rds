@@ -103,6 +103,7 @@ resource "aws_db_instance" "this" {
     var.tags,
     {
       "Name" = format("%s", var.identifier)
+      "ARN" = var.monitoring_role_arn
     },
   )
 
