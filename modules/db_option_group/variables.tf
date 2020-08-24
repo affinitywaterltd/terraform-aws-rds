@@ -4,8 +4,8 @@ variable "create" {
   default     = true
 }
 
-variable "name_prefix" {
-  description = "Creates a unique name beginning with the specified prefix"
+variable "name" {
+  description = "The name of the resource"
   type        = string
 }
 

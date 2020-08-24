@@ -2,14 +2,15 @@ locals {
   db_subnet_group_name          = var.db_subnet_group_name != "" ? var.db_subnet_group_name : module.db_subnet_group.this_db_subnet_group_id
   enable_create_db_subnet_group = var.db_subnet_group_name == "" ? var.create_db_subnet_group : false
 
-  parameter_group_name    = var.parameter_group_name != "" ? var.parameter_group_name : "${var.engine}-rds-parameter-group-${var.major_engine_version}-${var.identifier}"
+  parameter_group_name    = var.parameter_group_name != "" ? var.parameter_group_name : "${var.engine}-${var.major_engine_version}.rds-parameter-group.${var.identifier}"
   parameter_group_name_id = var.parameter_group_name != "" ? var.parameter_group_name : module.db_parameter_group.this_db_parameter_group_id
 
   final_snapshot_string         = "${var.identifier}-final"
   final_snapshot_identifier     = var.final_snapshot_identifier != "" ? var.final_snapshot_identifier : local.final_snapshot_string
   enable_create_db_option_group = var.create_db_option_group ? true : var.option_group_name == "" && var.engine != "postgres"
 
-  option_group_name             = var.option_group_name != "" ? var.option_group_name : module.db_option_group.this_db_option_group_id
+  option_group_name           = var.option_group_name != "" ? var.option_group_name : "${var.engine}-${var.major_engine_version}.rds-option-group.${var.identifier}"
+  option_group_id             = var.option_group_name != "" ? var.option_group_name : module.db_option_group.this_db_option_group_id
   max_allocated_storage = var.allocated_storage * 1.5
 }
 
@@ -48,7 +49,7 @@ module "db_option_group" {
 
   create                   = local.enable_create_db_option_group
   identifier               = var.identifier
-  name_prefix              = "${var.identifier}-"
+  name                     = local.option_group_name
   option_group_description = var.option_group_description
   engine_name              = var.engine
   major_engine_version     = var.major_engine_version
@@ -90,7 +91,7 @@ module "db_instance" {
   vpc_security_group_ids = var.vpc_security_group_ids
   db_subnet_group_name   = local.db_subnet_group_name
   parameter_group_name   = local.parameter_group_name_id
-  option_group_name      = local.option_group_name
+  option_group_name      = local.option_group_id
 
   availability_zone   = var.availability_zone
   multi_az            = var.multi_az
