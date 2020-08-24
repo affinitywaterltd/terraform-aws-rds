@@ -117,7 +117,8 @@ module "db_instance" {
   backup_retention_period = var.backup_retention_period
   backup_window           = var.backup_window
   monitoring_interval     = var.monitoring_interval_override == false && var.environment =="prod" ? 60 : var.monitoring_interval
-  monitoring_role_arn     = var.monitoring_role_arn != "" ? data.aws_iam_role.rds_enhanced_monitoring_role.arn : var.monitoring_role_arn
+  #monitoring_role_arn     = var.monitoring_role_arn != "" ? data.aws_iam_role.rds_enhanced_monitoring_role.arn : var.monitoring_role_arn
+  monitoring_role_arn     = data.aws_iam_role.rds_enhanced_monitoring_role.arn
   monitoring_role_name    = var.monitoring_role_name
   create_monitoring_role  = var.create_monitoring_role
 
@@ -130,5 +131,12 @@ module "db_instance" {
   deletion_protection      = var.deletion_protection
   delete_automated_backups = var.delete_automated_backups
 
-  tags = var.tags
+  #tags = var.tags
+
+  tags = merge(
+    local.common_tags,
+    {
+      "TestData"                = data.aws_iam_role.rds_enhanced_monitoring_role.arn
+    },
+  )
 }
