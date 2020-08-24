@@ -377,7 +377,7 @@ variable "delete_automated_backups" {
 }
 
 
-variable "environemnt" {
+variable "environment" {
   description = "Specifies the environment (e.g. prod or dev)"
   type        = string
 }
