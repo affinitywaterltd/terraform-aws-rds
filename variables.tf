@@ -164,6 +164,12 @@ variable "monitoring_interval_override" {
   default     = false
 }
 
+variable "monitoring_interval_production" {
+  description = "Default value for production workloads. The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid Values: 0, 1, 5, 10, 15, 30, 60."
+  type        = number
+  default     = 60
+}
+
 variable "monitoring_interval" {
   description = "The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid Values: 0, 1, 5, 10, 15, 30, 60."
   type        = number
@@ -223,10 +229,23 @@ variable "copy_tags_to_snapshot" {
   default     = false
 }
 
+
+variable "backup_retention_period_override" {
+  description = "Determined if the default backup retention period is applied or use the specified value"
+  type        = bool
+  default     = false
+}
+
+variable "backup_retention_period_production" {
+  description = "Default value for production workloads. The days to retain backups for"
+  type        = number
+  default     = 28
+}
+
 variable "backup_retention_period" {
   description = "The days to retain backups for"
   type        = number
-  default     = 28
+  default     = 7
 }
 
 variable "backup_window" {
