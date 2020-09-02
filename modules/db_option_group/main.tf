@@ -61,7 +61,7 @@ resource "aws_db_option_group" "this" {
   major_engine_version     = var.major_engine_version
 
   dynamic "option" {
-    for_each = var.default_options_enabled == true ? local.default_options : var.options
+    for_each = var.default_options_enabled == true ? [local.default_options] : [var.options]
     content {
       option_name                    = option.value.option_name
       port                           = lookup(option.value, "port", null)
