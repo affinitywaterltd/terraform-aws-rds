@@ -4,6 +4,12 @@ variable "create" {
   default     = true
 }
 
+variable "default_options_enabled" {
+  description = "Whether to use the default options or not"
+  type        = bool
+  default     = true
+}
+
 variable "name" {
   description = "The name of the resource"
   type        = string
@@ -49,3 +55,5 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+
