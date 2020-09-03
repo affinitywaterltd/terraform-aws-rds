@@ -61,7 +61,26 @@ resource "aws_db_option_group" "this" {
   major_engine_version     = var.major_engine_version
 
   dynamic "option" {
-    for_each = var.default_options_enabled == true ? [local.default_options] : [var.options]
+    for_each = var.default_options_enabled == true ? [local.default_options] : []
+    content {
+      option_name                    = option.value.option_name
+      port                           = lookup(option.value, "port", null)
+      version                        = lookup(option.value, "version", null)
+      db_security_group_memberships  = lookup(option.value, "db_security_group_memberships", null)
+      vpc_security_group_memberships = lookup(option.value, "vpc_security_group_memberships", null)
+
+      dynamic "option_settings" {
+        for_each = lookup(option.value, "option_settings", [])
+        content {
+          name  = lookup(option_settings.value, "name", null)
+          value = lookup(option_settings.value, "value", null)
+        }
+      }
+    }
+  }
+
+  dynamic "option" {
+    for_each = (var.default_options_enabled == false && length(keys(var.options)) != 0) ? [var.options] : []
     content {
       option_name                    = option.value.option_name
       port                           = lookup(option.value, "port", null)
