@@ -38,7 +38,7 @@ variable "major_engine_version" {
 
 variable "options" {
   description = "A list of Options to apply"
-Revert  type        = any
+  type        = any
   default     = []
 }
 
