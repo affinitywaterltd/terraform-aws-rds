@@ -38,7 +38,7 @@ variable "major_engine_version" {
 
 variable "options" {
   description = "A list of Options to apply"
-  type        = tuple
+Revert  type        = any
   default     = []
 }
 
