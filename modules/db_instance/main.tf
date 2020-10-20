@@ -184,5 +184,11 @@ resource "aws_db_instance" "this_mssql" {
     delete = lookup(var.timeouts, "delete", null)
     update = lookup(var.timeouts, "update", null)
   }
+
+    lifecycle {
+    ignore_changes = [
+      engine_version,
+    ]
+  }
 }
 
