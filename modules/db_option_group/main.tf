@@ -61,7 +61,7 @@ resource "aws_db_option_group" "this" {
   major_engine_version     = var.major_engine_version
 
   dynamic "option" {
-    for_each = (length(keys(var.options)) != 0) ? [var.options] : []
+    for_each = var.options
     content {
       option_name                    = option.value.option_name
       port                           = lookup(option.value, "port", null)
