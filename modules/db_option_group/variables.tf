@@ -4,10 +4,10 @@ variable "create" {
   default     = true
 }
 
-variable "default_options_enabled" {
+variable "default_options" {
   description = "Whether to use the default options or not"
-  type        = bool
-  default     = true
+  type        = string
+  default     = "oracle"
 }
 
 variable "name" {
@@ -39,56 +39,7 @@ variable "major_engine_version" {
 variable "options" {
   description = "A list of Options to apply"
   type        = any
-  default     = [
-    {
-      option_name = "STATSPACK"
-    },
-    {
-      option_name = "NATIVE_NETWORK_ENCRYPTION"
-
-      option_settings = [
-        {
-          name  = "SQLNET.CRYPTO_CHECKSUM_SERVER"
-          value = "REQUESTED"
-        },
-        {
-          name  = "SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER"
-          value = "SHA1,MD5"
-        },
-        {
-          name  = "SQLNET.ENCRYPTION_SERVER"
-          value = "REQUESTED"
-        },
-         {
-          name  = "SQLNET.ENCRYPTION_TYPES_SERVER"
-          value = "RC4_256,AES256,AES192,3DES168,RC4_128,AES128,3DES112,RC4_56,DES,RC4_40,DES40"
-        }
-      ]
-    },
-    {
-      option_name = "Timezone"
-
-      option_settings = [
-        {
-          name  = "TIME_ZONE"
-          value = "Europe/London"
-        }
-      ]
-    },
-    {
-      option_name = "S3_INTEGRATION"
-    },
-    {
-      option_name = "SQLT"
-
-      option_settings = [
-        {
-          name  = "LICENSE_PACK"
-          value = "N"
-        }
-      ]
-    }
-  ]
+  default     = []
 }
 
 variable "timeouts" {
