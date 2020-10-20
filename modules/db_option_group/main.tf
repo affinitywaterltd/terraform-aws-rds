@@ -60,7 +60,7 @@ resource "aws_db_option_group" "this" {
   engine_name              = var.engine_name
   major_engine_version     = var.major_engine_version
 
-/*
+
   dynamic "option" {
     for_each = var.default_options_enabled == true ? local.default_options : []
     content {
@@ -98,7 +98,7 @@ resource "aws_db_option_group" "this" {
       }
     }
   }
-*/
+
   tags = merge(
     var.tags,
     {
