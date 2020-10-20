@@ -38,7 +38,7 @@ variable "major_engine_version" {
 
 variable "options" {
   description = "A list of Options to apply"
-  type        = list[map(any),map(any)]
+  type        = any
   default     = [
     {
       option_name = "STATSPACK"
