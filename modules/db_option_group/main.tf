@@ -1,5 +1,5 @@
 locals{
-  default_options = {
+  default_options = [
     {
       option_name = "STATSPACK"
     },
@@ -48,7 +48,7 @@ locals{
         }
       ]
     }
-  }
+  ]
 }
 
 
@@ -62,7 +62,7 @@ resource "aws_db_option_group" "this" {
 
 
   dynamic "option" {
-    for_each = var.default_options == "oracle" ? local.default_options : {}
+    for_each = var.default_options == "oracle" ? toset(local.default_options) : {}
     content {
       option_name                    = option.value.option_name
       port                           = lookup(option.value, "port", null)
