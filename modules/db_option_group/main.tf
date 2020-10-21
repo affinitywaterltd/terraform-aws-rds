@@ -62,7 +62,7 @@ resource "aws_db_option_group" "this" {
 
 
   dynamic "option" {
-    for_each = var.default_options == "oracle" ? toset(local.default_options} : toset([])
+    for_each = var.default_options == "oracle" ? toset(local.default_options) : toset([])
     content {
       option_name                    = option.value.option_name
       port                           = lookup(option.value, "port", null)
