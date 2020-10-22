@@ -38,7 +38,7 @@ variable "major_engine_version" {
 
 variable "options" {
   description = "A map of Options to apply"
-  type        = map(string)
+  type        = any
   default     = {}
 }
 
