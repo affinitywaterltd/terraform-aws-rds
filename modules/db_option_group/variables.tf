@@ -38,8 +38,8 @@ variable "major_engine_version" {
 
 variable "options" {
   description = "A map of Options to apply"
-  type        = map(any)
-  default     = {}
+  type        = any
+  default     = null
 }
 
 variable "timeouts" {
