@@ -4,10 +4,10 @@ variable "create" {
   default     = true
 }
 
-variable "default_options" {
+variable "default_options_enabled" {
   description = "Whether to use the default options or not"
-  type        = string
-  default     = "none"
+  type        = bool
+  default     = true
 }
 
 variable "name" {
