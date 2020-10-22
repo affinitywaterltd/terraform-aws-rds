@@ -94,7 +94,8 @@ resource "aws_db_option_group" "this" {
       }
     }
   }
-
+  
+/*
   dynamic "option" {
     for_each = (var.default_options == "none" && length(keys(var.options)) != 0) ? var.options : []
     content {
@@ -112,7 +113,7 @@ resource "aws_db_option_group" "this" {
         }
       }
     }
-  }
+  }*/
 
   tags = merge(
     var.tags,
