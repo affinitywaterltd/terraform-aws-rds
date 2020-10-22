@@ -1,5 +1,23 @@
 locals{
-  default_options = [
+  default_options = {
+    STATSPACK = {}
+    NATIVE_NETWORK_ENCRYPTION = {
+       "SQLNET.CRYPTO_CHECKSUM_SERVER" = "REQUESTED"
+       "SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER" = "SHA1,MD5"
+       "SQLNET.ENCRYPTION_SERVER" = "REQUESTED"
+       "SQLNET.ENCRYPTION_TYPES_SERVER" = "RC4_256,AES256,AES192,3DES168,RC4_128,AES128,3DES112,RC4_56,DES,RC4_40,DES40"
+    }
+  }
+  
+  
+  
+  
+  /*
+  [
+
+
+
+
     {
       option_name = "STATSPACK"
     },
@@ -49,7 +67,7 @@ locals{
       ]
     }
   ]
-}
+}*/
 
 
 resource "aws_db_option_group" "this" {
@@ -60,21 +78,17 @@ resource "aws_db_option_group" "this" {
   engine_name              = var.engine_name
   major_engine_version     = var.major_engine_version
 
-/*
+
   dynamic "option" {
-    for_each = contains(var.default_options, "oracle") ? toset(local.default_options) : toset([])
+    for_each = var.default_options == "oracle" ? local.default_options : {}
     content {
-      option_name                    = option.value.option_name
-      port                           = lookup(option.value, "port", null)
-      version                        = lookup(option.value, "version", null)
-      db_security_group_memberships  = lookup(option.value, "db_security_group_memberships", null)
-      vpc_security_group_memberships = lookup(option.value, "vpc_security_group_memberships", null)
+      option_name                    = option.key
 
       dynamic "option_settings" {
-        for_each = lookup(option.value, "option_settings", [])
+        for_each = option.value
         content {
-          name  = lookup(option_settings.value, "name", null)
-          value = lookup(option_settings.value, "value", null)
+          name  = option_settings.key
+          value = option_settings.value
         }
       }
     }
@@ -97,7 +111,7 @@ resource "aws_db_option_group" "this" {
         }
       }
     }
-  }*/
+  }
 
   tags = merge(
     var.tags,
