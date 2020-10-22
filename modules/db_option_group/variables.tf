@@ -39,7 +39,7 @@ variable "major_engine_version" {
 variable "options" {
   description = "A list of Options to apply"
   type        = any
-  default     = []
+  default     = {}
 }
 
 variable "timeouts" {
