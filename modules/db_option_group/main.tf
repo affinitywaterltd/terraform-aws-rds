@@ -90,7 +90,7 @@ resource "aws_db_option_group" "this" {
 
   # Oracle
   dynamic "option" {
-    for_each = (var.default_options_enabled == true && contains(["oracle-se1", "oracle-se2", "oracle-ee"],var.engine_name) ? local.default_oracle_options : {}
+    for_each = (var.default_options_enabled == true && var.engine_name == "oracle-se2" ? local.default_oracle_options : {}
     content {
       option_name = option.key
 
