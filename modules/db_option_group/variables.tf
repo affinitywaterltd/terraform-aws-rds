@@ -7,7 +7,7 @@ variable "create" {
 variable "default_options" {
   description = "Whether to use the default options or not"
   type        = string
-  default     = "oracle"
+  default     = "none"
 }
 
 variable "name" {
