@@ -401,3 +401,8 @@ variable "environment" {
   type        = string
 }
 
+variable "default_options_enabled" {
+  description = "Whether to use the default options or not"
+  type        = bool
+  default     = true
+}
