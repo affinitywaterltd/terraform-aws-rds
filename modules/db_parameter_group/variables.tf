@@ -35,7 +35,7 @@ variable "family" {
 variable "parameters" {
   description = "A list of DB parameter maps to apply"
   type        = any
-  default     = {}
+  default     = []
 }
 
 variable "tags" {

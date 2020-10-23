@@ -277,7 +277,7 @@ variable "family" {
 variable "parameters" {
   description = "A list of DB parameters (map) to apply"
   type        = any
-  default     = {}
+  default     = []
 }
 
 # DB option group
