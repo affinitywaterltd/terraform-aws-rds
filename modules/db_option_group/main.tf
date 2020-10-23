@@ -122,7 +122,7 @@ resource "aws_db_option_group" "this" {
 
   # No Detault Option Supplied
   dynamic "option" {
-    for_each = var.default_options_enabled == false ? var.options : {}
+    for_each = var.default_options_enabled == false ? var.custom_options : {}
     content {
       option_name = option.key
 
