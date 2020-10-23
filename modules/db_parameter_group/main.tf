@@ -24,7 +24,7 @@ resource "aws_db_parameter_group" "this" {
   family      = var.family
 
   dynamic "parameter" {
-    for_each = default_parameters_enabled == true ? merge(var.parameters, local.default_oracle_parameters) : var.parameters
+    for_each = var.default_parameters_enabled == true ? merge(var.parameters, local.default_oracle_parameters) : var.parameters
     content {
       name         = parameter.name
       value        = parameter.value.value
