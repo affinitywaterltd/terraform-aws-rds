@@ -39,11 +39,11 @@ resource "aws_db_option_group" "this" {
         content {
           name  = option_settings.key
           value = option_settings.value
-          db_security_group_memberships  = []
-          vpc_security_group_memberships  = []
-          port = 0
         }
       }
+      db_security_group_memberships  = []
+      vpc_security_group_memberships  = []
+      port = 0
     }
   }
 
@@ -58,10 +58,10 @@ resource "aws_db_option_group" "this" {
         content {
           name  = option_settings.key
           value = option_settings.value
-          db_security_group_memberships  = []
-          vpc_security_group_memberships  = []
-          port = 0
         }
+        db_security_group_memberships  = []
+        vpc_security_group_memberships  = []
+        port = 0
       }
     }
   }
@@ -77,10 +77,10 @@ resource "aws_db_option_group" "this" {
         content {
           name  = option_settings.key
           value = option_settings.value
-          db_security_group_memberships  = []
-          vpc_security_group_memberships  = []
-          port = 0
         }
+        db_security_group_memberships  = []
+        vpc_security_group_memberships  = []
+        port = 0
       }
     }
   }
