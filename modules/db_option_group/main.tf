@@ -18,66 +18,6 @@ locals{
 
   default_mssql_options = {}
 }
-  
-  
-  
-  /*
-  [
-
-
-
-
-    {
-      option_name = "STATSPACK"
-    },
-    {
-      option_name = "NATIVE_NETWORK_ENCRYPTION"
-
-      option_settings = [
-        {
-          name  = "SQLNET.CRYPTO_CHECKSUM_SERVER"
-          value = "REQUESTED"
-        },
-        {
-          name  = "SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER"
-          value = "SHA1,MD5"
-        },
-        {
-          name  = "SQLNET.ENCRYPTION_SERVER"
-          value = "REQUESTED"
-        },
-         {
-          name  = "SQLNET.ENCRYPTION_TYPES_SERVER"
-          value = "RC4_256,AES256,AES192,3DES168,RC4_128,AES128,3DES112,RC4_56,DES,RC4_40,DES40"
-        }
-      ]
-    },
-    {
-      option_name = "Timezone"
-
-      option_settings = [
-        {
-          name  = "TIME_ZONE"
-          value = "Europe/London"
-        }
-      ]
-    },
-    {
-      option_name = "S3_INTEGRATION"
-    },
-    {
-      option_name = "SQLT"
-
-      option_settings = [
-        {
-          name  = "LICENSE_PACK"
-          value = "N"
-        }
-      ]
-    }
-  ]
-}*/
-
 
 resource "aws_db_option_group" "this" {
   count = var.create ? 1 : 0

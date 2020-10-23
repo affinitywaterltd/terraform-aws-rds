@@ -4,6 +4,12 @@ variable "create" {
   default     = true
 }
 
+variable "default_parameters_enabled" {
+  description = "Whether to add default parameters this resource or not?"
+  type        = bool
+  default     = true
+}
+
 variable "description" {
   description = "The description of the DB parameter group"
   type        = string
