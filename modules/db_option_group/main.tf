@@ -2,17 +2,34 @@ locals{
   default_oracle_options = {
     STATSPACK = {}
     NATIVE_NETWORK_ENCRYPTION = {
-       "SQLNET.CRYPTO_CHECKSUM_SERVER" = "REQUESTED"
-       "SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER" = "SHA1,MD5"
-       "SQLNET.ENCRYPTION_SERVER" = "REQUESTED"
-       "SQLNET.ENCRYPTION_TYPES_SERVER" = "RC4_256,AES256,AES192,3DES168,RC4_128,AES128,3DES112,RC4_56,DES,RC4_40,DES40"
+      {
+        name = "SQLNET.CRYPTO_CHECKSUM_SERVER"
+        value = "REQUESTED"
+      },
+      {
+        name = "SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER"
+        value = "SHA1,MD5"
+      },
+      {
+        name = "SQLNET.ENCRYPTION_SERVER"
+        value = "REQUESTED"
+      },
+      {
+        name = "SQLNET.ENCRYPTION_TYPES_SERVER"
+        value = "RC4_256,AES256,AES192,3DES168,RC4_128,AES128,3DES112,RC4_56,DES,RC4_40,DES40"
+      }
     }
     Timezone = {
-      TIME_ZONE = "Europe/London"
+      {W
+        name = "TIME_ZONE"
+        value = "Europe/London"
+      }
     }
     S3_INTEGRATION = {}
     SQLT = {
-      LICENSE_PACK = "N"
+      {
+        name = "LICENSE_PACK"
+        valu = "N"
     }
   }
 
@@ -41,8 +58,8 @@ resource "aws_db_option_group" "this" {
       dynamic "option_settings" {
         for_each = option.value
         content {
-          name  = option_settings.key
-          value = option_settings.value
+          name  = option_settings.value.name
+          value = option_settings.value.value
         }
       }
     }
