@@ -42,7 +42,7 @@ module "db_parameter_group" {
   description     = var.parameter_group_description
   family          = "${var.engine}-${var.major_engine_version}"
 
-  default_options_enabled  = var.default_options_enabled
+  default_parameters_enabled  = var.default_parameters_enabled
   parameters = var.parameters
 
   tags = var.tags
