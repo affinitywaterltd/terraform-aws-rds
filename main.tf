@@ -57,6 +57,8 @@ module "db_option_group" {
   engine_name              = var.engine
   major_engine_version     = var.major_engine_version
 
+  default_options_enabled  = var.default_options_enabled
+
   options = var.options
 
   timeouts = var.option_group_timeouts
