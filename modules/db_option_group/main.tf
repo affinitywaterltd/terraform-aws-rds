@@ -2,29 +2,17 @@ locals{
   default_oracle_options = {
     STATSPACK = {}
     NATIVE_NETWORK_ENCRYPTION = {
-       "SQLNET.CRYPTO_CHECKSUM_SERVER" = {
-         value = "REQUESTED"
-       }
-       "SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER" = {
-         value = "SHA1,MD5"
-       }
-       "SQLNET.ENCRYPTION_SERVER" = {
-         value = "REQUESTED"
-       }
-       "SQLNET.ENCRYPTION_TYPES_SERVER" = {
-         value = "RC4_256,AES256,AES192,3DES168,RC4_128,AES128,3DES112,RC4_56,DES,RC4_40,DES40"
-       }
+       "SQLNET.CRYPTO_CHECKSUM_SERVER" = "REQUESTED"
+       "SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER" = "SHA1,MD5"
+       "SQLNET.ENCRYPTION_SERVER" = "REQUESTED"
+       "SQLNET.ENCRYPTION_TYPES_SERVER" = "RC4_256,AES256,AES192,3DES168,RC4_128,AES128,3DES112,RC4_56,DES,RC4_40,DES40"
     }
     Timezone = {
-      TIME_ZONE = {
-        value = "Europe/London"
-      }
+      TIME_ZONE = "Europe/London"
     }
     S3_INTEGRATION = {}
     SQLT = {
-      LICENSE_PACK = {
-        value = "N"
-      }
+      LICENSE_PACK = "N"
     }
   }
 
@@ -45,15 +33,16 @@ resource "aws_db_option_group" "this" {
     for_each = (var.default_options_enabled == true && contains(["oracle-se1", "oracle-se2", "oracle-ee1"],var.engine_name)) ? local.default_oracle_options : {}
     content {
       option_name = option.key
+      
+      db_security_group_memberships  = []
+      vpc_security_group_memberships  = []
+      port = 0
 
       dynamic "option_settings" {
         for_each = option.value
         content {
           name  = option_settings.key
-          value = option_settings.value.value
-          db_security_group_memberships = lookup(option_settings.value, "db_security_group_memberships", [])
-          vpc_security_group_memberships = lookup(option_settings.value, "vpc_security_group_memberships", [])
-          port = lookup(option_settings.value, "port", 0)
+          value = option_settings.value
         }
       }
     }
