@@ -20,7 +20,7 @@ locals{
       }
     }
     Timezone = {
-      {W
+      {
         name = "TIME_ZONE"
         value = "Europe/London"
       }
