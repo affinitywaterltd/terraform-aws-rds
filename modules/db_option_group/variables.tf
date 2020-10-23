@@ -36,7 +36,7 @@ variable "major_engine_version" {
   type        = string
 }
 
-variable "options" {
+variable "custom_options" {
   description = "A map of Options to apply"
   type        = any
   default     = null

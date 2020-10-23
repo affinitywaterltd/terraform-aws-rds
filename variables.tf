@@ -293,10 +293,10 @@ variable "major_engine_version" {
   default     = ""
 }
 
-variable "options" {
+variable "custom_options" {
   description = "A list of Options to apply."
   type        = any
-  default     = []
+  default     = null
 }
 
 variable "create_db_subnet_group" {

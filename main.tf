@@ -59,7 +59,7 @@ module "db_option_group" {
 
   default_options_enabled  = var.default_options_enabled
 
-  options = var.options
+  custom_options = var.custom_options
 
   timeouts = var.option_group_timeouts
 
