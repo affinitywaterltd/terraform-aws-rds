@@ -2,17 +2,29 @@ locals{
   default_oracle_options = {
     STATSPACK = {}
     NATIVE_NETWORK_ENCRYPTION = {
-       "SQLNET.CRYPTO_CHECKSUM_SERVER" = "REQUESTED"
-       "SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER" = "SHA1,MD5"
-       "SQLNET.ENCRYPTION_SERVER" = "REQUESTED"
-       "SQLNET.ENCRYPTION_TYPES_SERVER" = "RC4_256,AES256,AES192,3DES168,RC4_128,AES128,3DES112,RC4_56,DES,RC4_40,DES40"
+       "SQLNET.CRYPTO_CHECKSUM_SERVER" = {
+         value = "REQUESTED"
+       }
+       "SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER" = {
+         value = "SHA1,MD5"
+       }
+       "SQLNET.ENCRYPTION_SERVER" = {
+         value = "REQUESTED"
+       }
+       "SQLNET.ENCRYPTION_TYPES_SERVER" = {
+         value = "RC4_256,AES256,AES192,3DES168,RC4_128,AES128,3DES112,RC4_56,DES,RC4_40,DES40"
+       }
     }
     Timezone = {
-      TIME_ZONE = "Europe/London"
+      TIME_ZONE = {
+        value = "Europe/London"
+      }
     }
     S3_INTEGRATION = {}
     SQLT = {
-      LICENSE_PACK = "N"
+      LICENSE_PACK = {
+        value = "N"
+      }
     }
   }
 
@@ -38,12 +50,12 @@ resource "aws_db_option_group" "this" {
         for_each = option.value
         content {
           name  = option_settings.key
-          value = option_settings.value
+          value = option_settings.value.value
+          db_security_group_memberships = lookup(option_settings.value, "db_security_group_memberships", [])
+          vpc_security_group_memberships = lookup(option_settings.value, "vpc_security_group_memberships", [])
+          port = lookup(option_settings.value, "port", 0)
         }
       }
-      db_security_group_memberships  = []
-      vpc_security_group_memberships  = []
-      port = 0
     }
   }
 
@@ -58,10 +70,6 @@ resource "aws_db_option_group" "this" {
         content {
           name  = option_settings.key
           value = option_settings.value
-        }
-        db_security_group_memberships  = []
-        vpc_security_group_memberships  = []
-        port = 0
       }
     }
   }
@@ -78,9 +86,6 @@ resource "aws_db_option_group" "this" {
           name  = option_settings.key
           value = option_settings.value
         }
-        db_security_group_memberships  = []
-        vpc_security_group_memberships  = []
-        port = 0
       }
     }
   }
