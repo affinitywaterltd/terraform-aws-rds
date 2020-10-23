@@ -39,7 +39,7 @@ variable "major_engine_version" {
 variable "custom_options" {
   description = "A map of Options to apply"
   type        = any
-  default     = null
+  default     = {}
 }
 
 variable "timeouts" {
