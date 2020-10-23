@@ -13,7 +13,7 @@ locals {
     {
       name = "audit_trail"
       value = "db"
-      apply_method = "pending-reboot
+      apply_method = "pending-reboot"
     }
   ]
 }
