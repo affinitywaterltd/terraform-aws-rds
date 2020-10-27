@@ -18,7 +18,7 @@ locals {
       version = "1.0"
     }
     SQLT = {
-      version = "2016-04-29.v1"
+      version = "2018-07-25.v1"
       LICENSE_PACK = "N"
     }
   }
