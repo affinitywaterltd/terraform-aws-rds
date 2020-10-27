@@ -22,6 +22,8 @@ locals {
       LICENSE_PACK = "N"
     }
   }
+
+  default_mssql_options = {}
 }
 
 
