@@ -39,7 +39,7 @@ resource "aws_db_option_group" "this" {
 
   # Oracle
   dynamic "option" {
-    for_each = (var.default_options_enabled == true && contains(["oracle-se1", "oracle-se2", "oracle-ee1"],var.engine_name)) ? local.default_oracle_options : map()
+    for_each = (var.default_options_enabled == true && contains(["oracle-se1", "oracle-se2", "oracle-ee1"],var.engine_name)) ? local.default_oracle_options : {}
     content {
       option_name = option.key
       version = lookup(option.value, "version", null)
@@ -57,7 +57,7 @@ resource "aws_db_option_group" "this" {
 
   # MSSQL
   dynamic "option" {
-    for_each = (var.default_options_enabled == true && var.engine_name == "mssql") ? local.default_mssql_options : map()
+    for_each = (var.default_options_enabled == true && var.engine_name == "mssql") ? local.default_mssql_options : {}
     content {
       option_name = option.key
       version = lookup(option.value, "version", null)
