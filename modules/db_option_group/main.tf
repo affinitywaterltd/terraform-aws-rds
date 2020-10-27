@@ -1,23 +1,29 @@
-locals{
+locals {
   default_oracle_options = {
     STATSPACK = {}
     NATIVE_NETWORK_ENCRYPTION = {
+      settings = {
        "SQLNET.CRYPTO_CHECKSUM_SERVER" = "REQUESTED"
        "SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER" = "SHA1,MD5"
        "SQLNET.ENCRYPTION_SERVER" = "REQUESTED"
        "SQLNET.ENCRYPTION_TYPES_SERVER" = "RC4_256,AES256,AES192,3DES168,RC4_128,AES128,3DES112,RC4_56,DES,RC4_40,DES40"
+      }
     }
     Timezone = {
-      TIME_ZONE = "Europe/London"
+      settings = {
+        TIME_ZONE = "Europe/London"
+      }
     }
-    S3_INTEGRATION = {}
+    S3_INTEGRATION = {
+      version = "1.0"
+    }
     SQLT = {
+      version = "2016-04-29.v1"
       LICENSE_PACK = "N"
     }
   }
-
-  default_mssql_options = {}
 }
+
 
 
 resource "aws_db_option_group" "this" {
@@ -31,34 +37,38 @@ resource "aws_db_option_group" "this" {
 
   # Oracle
   dynamic "option" {
-    for_each = (var.default_options_enabled == true && contains(["oracle-se1", "oracle-se2", "oracle-ee1"],var.engine_name)) ? local.default_oracle_options : {}
+    for_each = (var.default_options_enabled == true && contains(["oracle-se1", "oracle-se2", "oracle-ee1"],var.engine_name)) ? local.default_oracle_options : map()
     content {
       option_name = option.key
+      version = lookup(option.value, "version", null)
 
       dynamic "option_settings" {
-        for_each = option.value
+        for_each = lookup(option.value, "settings", {})
         content {
           name  = option_settings.key
           value = option_settings.value
         }
       }
     }
+
   }
 
   # MSSQL
   dynamic "option" {
-    for_each = (var.default_options_enabled == true && var.engine_name == "mssql") ? local.default_mssql_options : {}
+    for_each = (var.default_options_enabled == true && var.engine_name == "mssql") ? local.default_mssql_options : map()
     content {
       option_name = option.key
+      version = lookup(option.value, "version", null)
 
       dynamic "option_settings" {
-        for_each = option.value
+        for_each = lookup(option.value, "settings", {})
         content {
           name  = option_settings.key
           value = option_settings.value
         }
       }
     }
+
   }
 
   # No Detault Option Supplied
@@ -66,15 +76,17 @@ resource "aws_db_option_group" "this" {
     for_each = var.custom_options
     content {
       option_name = option.key
+      version = lookup(option.value, "version", null)
 
       dynamic "option_settings" {
-        for_each = option.value
+        for_each = lookup(option.value, "settings", {})
         content {
           name  = option_settings.key
           value = option_settings.value
         }
       }
     }
+
   }
 
 /*
