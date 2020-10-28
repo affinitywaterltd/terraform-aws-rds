@@ -1,7 +1,7 @@
 locals {
   description = coalesce(var.description, "Database parameter group for ${var.identifier}")
 
-  default_oracle_parameters = [
+  default_oracle_parameters = {
     {
       name = "sqlnetora.sqlnet.allowed_logon_version_client"
       value = "11"
@@ -15,7 +15,7 @@ locals {
       value = "db"
       apply_method = "pending-reboot"
     }
-  ]
+  }
 }
 
 resource "aws_db_parameter_group" "this" {
