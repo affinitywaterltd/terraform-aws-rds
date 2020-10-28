@@ -32,7 +32,7 @@ variable "family" {
   type        = string
 }
 
-variable "parameters" {
+variable "custom_parameters" {
   description = "A list of DB parameter maps to apply"
   type        = any
   default     = []

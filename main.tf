@@ -43,7 +43,7 @@ module "db_parameter_group" {
   family          = "${var.engine}-${var.major_engine_version}"
 
   default_parameters_enabled  = var.default_parameters_enabled
-  parameters = var.parameters
+  custom_parameters = var.custom_parameters
 
   tags = var.tags
 }

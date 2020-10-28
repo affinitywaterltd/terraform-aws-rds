@@ -26,7 +26,16 @@ resource "aws_db_parameter_group" "this" {
   family      = var.family
 
   dynamic "parameter" {
-    for_each = local.default_oracle_parameters
+    for_each = (var.default_parameters_enabled == true && contains(["oracle-se1", "oracle-se2", "oracle-ee", "oracle-se"],var.engine_name)) ? local.default_oracle_parameters : tomap({})
+    content {
+      name         = parameter.value.name
+      value        = parameter.value.value
+      apply_method = lookup(parameter.value, "apply_method", null)
+    }
+  }
+
+  dynamic "parameter" {
+    for_each = var.custom_parameters
     content {
       name         = parameter.value.name
       value        = parameter.value.value
