@@ -194,6 +194,7 @@ resource "aws_db_instance" "this_mssql" {
   lifecycle {
     ignore_changes = [
       engine_version,
+      maintenance_window
     ]
   }
 }
