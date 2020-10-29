@@ -2,16 +2,13 @@ locals {
   description = coalesce(var.description, "Database parameter group for ${var.identifier}")
 
   default_oracle_parameters = {
-    {
-      name = "sqlnetora.sqlnet.allowed_logon_version_client"
+    "sqlnetora.sqlnet.allowed_logon_version_client" = {
       value = "11"
-    },
-    {
-      name = "sqlnetora.sqlnet.allowed_logon_version_server"
+    }
+    "sqlnetora.sqlnet.allowed_logon_version_server" = {
       value = "11"
-    },
-    {
-      name = "audit_trail"
+    }
+    "audit_trail" = {
       value = "db"
       apply_method = "pending-reboot"
     }
@@ -28,7 +25,7 @@ resource "aws_db_parameter_group" "this" {
   dynamic "parameter" {
     for_each = (var.default_parameters_enabled == true && element(split("-", var.family), 0) == "oracle") ? local.default_oracle_parameters : tomap({})
     content {
-      name         = parameter.value.name
+      name         = parameter.key
       value        = parameter.value.value
       apply_method = lookup(parameter.value, "apply_method", null)
     }
@@ -37,7 +34,7 @@ resource "aws_db_parameter_group" "this" {
   dynamic "parameter" {
     for_each = var.custom_parameters
     content {
-      name         = parameter.value.name
+      name         = parameter.key
       value        = parameter.value.value
       apply_method = lookup(parameter.value, "apply_method", null)
     }
