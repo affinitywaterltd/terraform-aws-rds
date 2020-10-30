@@ -119,7 +119,7 @@ module "db_instance" {
 
   backup_retention_period = var.backup_retention_period_override == false && var.environment =="prod" ? var.backup_retention_period_production : var.backup_retention_period
   backup_window           = var.backup_window
-  monitoring_interval     = var.monitoring_interval_override == false && var.environment =="prod" ? var.monitoring_interval_production : var.monitoring_interval
+  monitoring_interval     = var.monitoring_interval
   monitoring_role_arn     = var.monitoring_role_arn == "" ? data.aws_iam_role.rds_enhanced_monitoring_role.arn : var.monitoring_role_arn
 
   monitoring_role_name    = var.monitoring_role_name
