@@ -11,7 +11,8 @@ locals {
 
   option_group_name           = "${var.engine}-${var.major_engine_version}-rds-option-group-${var.identifier}"
   option_group_id             = var.option_group_name != "" ? var.option_group_name : module.db_option_group.this_db_option_group_id
-  max_allocated_storage = var.allocated_storage * 1.5
+  
+  max_allocated_storage       = ceil(var.allocated_storage * 1.5) # Rounds up to nearest whole number
 }
 
 data "aws_kms_alias" "kms_key_rds" {
