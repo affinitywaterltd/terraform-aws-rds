@@ -380,7 +380,7 @@ variable "ca_cert_identifier" {
 variable "delete_automated_backups" {
   description = "Specifies whether to remove automated backups immediately after the DB instance is deleted"
   type        = bool
-  default     = false
+  default     = true
 }
 
 
