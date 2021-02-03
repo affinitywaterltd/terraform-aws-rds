@@ -171,3 +171,40 @@ variable "vpc_security_group_ids" {
   type        = list(string)
   default     = []
 }
+
+variable "publicly_accessible" {
+  description = "Bool to control if instance is publicly accessible"
+  type        = bool
+  default     = false
+}
+
+variable "cluster_instances" {
+  description = "Configuration of each instance in an RDS cluster"
+  type        = any
+  default     = []
+}
+
+variable "cluster_instances" {
+  description = "Configuration of each instance in an RDS cluster"
+  type        = any
+  default     = []
+}
+
+variable "monitoring_interval" {
+  description = "The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid Values: 0, 1, 5, 10, 15, 30, 60."
+  type        = number
+  default     = 60
+}
+
+variable "monitoring_role_arn" {
+  description = "The ARN for the IAM role that permits RDS to send enhanced monitoring metrics to CloudWatch Logs. Must be specified if monitoring_interval is non-zero."
+  type        = string
+  default     = ""
+}
+
+locals {
+  default_instance_class = "db.t3.medium"
+  default_monitoring_inteval = 60
+  default_promotion_tier = 0
+  default_performance_insights_enabled = true
+}

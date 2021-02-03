@@ -431,3 +431,9 @@ variable "db_cluster_parameter_group_name" {
   type        = string
   default     = null
 }
+
+variable "cluster_instances" {
+  description = "Configuration of each instance in an RDS cluster"
+  type        = any
+  default     = []
+}

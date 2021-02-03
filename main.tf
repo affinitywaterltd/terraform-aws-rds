@@ -184,58 +184,13 @@ module "rds_cluster" {
   maintenance_window = var.maintenance_window
 
 
+  # Instance level settings
+  cluster_instances   = var.cluster_instances
+  publicly_accessible = var.publicly_accessible
 
-
-
-
-
-
-
-
-
-/*
-
+  monitoring_role_arn     = var.monitoring_role_arn == "" ? data.aws_iam_role.rds_enhanced_monitoring_role.arn : var.monitoring_role_arn
+  
   deletion_protection   = var.deletion_protection
 
   tags = var.tags
-
-
-
-
-
-  instance_class        = var.instance_class
-  performance_insights_kms_key_id = var.kms_key_id == null && var.storage_encrypted == true ? data.aws_kms_alias.kms_key_rds.target_key_id : var.kms_key_id
-
-  
-  parameter_group_name   = local.parameter_group_name_id
-  
-  multi_az            = var.multi_az
-  iops                = var.iops
-  publicly_accessible = var.publicly_accessible
-
-  ca_cert_identifier = var.ca_cert_identifier
-
-  auto_minor_version_upgrade  = var.auto_minor_version_upgrade
-  
-  
-  
-  performance_insights_enabled          = var.performance_insights_enabled
-  performance_insights_retention_period = var.performance_insights_retention_period
-
-  
-  monitoring_interval     = var.monitoring_interval
-  monitoring_role_arn     = var.monitoring_role_arn == "" ? data.aws_iam_role.rds_enhanced_monitoring_role.arn : var.monitoring_role_arn
-
-  monitoring_role_name    = var.monitoring_role_name
-  create_monitoring_role  = var.create_monitoring_role
-
-  timezone                        = var.timezone
-  character_set_name              = var.character_set_name
-  enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
-
-  timeouts = var.timeouts
-
-  
-  delete_automated_backups = var.delete_automated_backups
-*/
 }

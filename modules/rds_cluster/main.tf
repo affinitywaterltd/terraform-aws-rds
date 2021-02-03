@@ -54,14 +54,22 @@ resource "aws_rds_cluster" "this" {
 }
 
 
-/*
+
 resource "aws_rds_cluster_instance" "this" {
-  count              = 2
+  count              = var.create ? length(var.cluster_instances) : 0
+  cluster_identifier = aws_rds_cluster.this.id
+  identifier         = "${var.identifier}-${count.index}"
+  
+  engine               = var.engine
+  engine_version       = var.engine_version
+  publicly_accessible  = var.publicly_accessible
+  db_subnet_group_name = var.db_subnet_group_name
+  monitoring_role_arn  = var.monitoring_role_arn
 
+  instance_class       = lookup(element(var.cluster_instances, count.index), "instance_class", local.default_instance_class)
+  monitoring_interval  = lookup(element(var.cluster_instances, count.index), "monitoring_interval", local.default_monitoring_interval)
+  promotion_tier       = lookup(element(var.cluster_instances, count.index), "promotion_tier", local.default_promotion_tier)
+  availability_zone    = lookup(element(var.cluster_instances, count.index), "availability_zone", null)
+  performance_insights_enabled = lookup(element(var.cluster_instances, count.index), "performance_insights_enabled", local.default_performance_insights_enabled)
 
-  identifier         = "aurora-cluster-demo-${count.index}"
-  cluster_identifier = aws_rds_cluster.default.id
-  instance_class     = "db.r4.large"
-  engine             = aws_rds_cluster.default.engine
-  engine_version     = aws_rds_cluster.default.engine_version
-}*/
+}
