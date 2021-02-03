@@ -184,12 +184,6 @@ variable "cluster_instances" {
   default     = []
 }
 
-variable "cluster_instances" {
-  description = "Configuration of each instance in an RDS cluster"
-  type        = any
-  default     = []
-}
-
 variable "monitoring_interval" {
   description = "The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid Values: 0, 1, 5, 10, 15, 30, 60."
   type        = number
