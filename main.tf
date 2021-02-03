@@ -168,7 +168,7 @@ module "rds_cluster" {
 
   vpc_security_group_ids          = var.vpc_security_group_ids
   db_subnet_group_name            = local.db_subnet_group_name
-  db_cluster_parameter_group_name = var.db_cluster_parameter_group_name 
+  db_cluster_parameter_group_name = local.parameter_group_name
 
   availability_zones  = var.availability_zones
 
