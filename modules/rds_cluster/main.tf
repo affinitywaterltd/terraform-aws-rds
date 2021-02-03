@@ -53,12 +53,10 @@ resource "aws_rds_cluster" "this" {
   }
 }
 
-
-
 resource "aws_rds_cluster_instance" "this" {
   count              = var.create ? length(var.cluster_instances) : 0
   cluster_identifier = aws_rds_cluster.this[0].id
-  identifier         = "${var.identifier}-${count.index}"
+  identifier         = "${var.identifier}-${count.index+1}"
   
   engine               = var.engine
   engine_version       = var.engine_version
