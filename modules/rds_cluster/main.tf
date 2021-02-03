@@ -66,6 +66,11 @@ resource "aws_rds_cluster_instance" "this" {
   db_subnet_group_name = var.db_subnet_group_name
   monitoring_role_arn  = var.monitoring_role_arn
 
+  auto_minor_version_upgrade  = var.auto_minor_version_upgrade
+  apply_immediately           = var.apply_immediately
+  
+  copy_tags_to_snapshot       = var.copy_tags_to_snapshot
+
   instance_class       = lookup(element(var.cluster_instances, count.index), "instance_class", local.default_instance_class)
   monitoring_interval  = lookup(element(var.cluster_instances, count.index), "monitoring_interval", local.default_monitoring_interval)
   promotion_tier       = lookup(element(var.cluster_instances, count.index), "promotion_tier", local.default_promotion_tier)

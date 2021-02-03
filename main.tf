@@ -185,11 +185,12 @@ module "rds_cluster" {
 
 
   # Instance level settings
-  cluster_instances   = var.cluster_instances
-  publicly_accessible = var.publicly_accessible
+  cluster_instances           = var.cluster_instances
+  publicly_accessible         = var.publicly_accessible
+  auto_minor_version_upgrade  = var.auto_minor_version_upgrade
 
   monitoring_role_arn     = var.monitoring_role_arn == "" ? data.aws_iam_role.rds_enhanced_monitoring_role.arn : var.monitoring_role_arn
-  
+
   deletion_protection   = var.deletion_protection
 
   tags = var.tags

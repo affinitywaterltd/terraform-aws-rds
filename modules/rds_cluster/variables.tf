@@ -196,6 +196,12 @@ variable "monitoring_role_arn" {
   default     = ""
 }
 
+variable "auto_minor_version_upgrade" {
+  description = "Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window"
+  type        = bool
+  default     = false
+}
+
 locals {
   default_instance_class = "db.t3.medium"
   default_monitoring_interval = 60
