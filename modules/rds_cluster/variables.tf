@@ -198,7 +198,7 @@ variable "monitoring_role_arn" {
 
 locals {
   default_instance_class = "db.t3.medium"
-  default_monitoring_inteval = 60
+  default_monitoring_interval = 60
   default_promotion_tier = 0
   default_performance_insights_enabled = true
 }
