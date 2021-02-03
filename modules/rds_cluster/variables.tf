@@ -61,7 +61,7 @@ variable "db_subnet_group_name" {
 variable "db_cluster_parameter_group_name" {
   description = "(Optional) A cluster parameter group to associate with the cluster."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "deletion_protection" {

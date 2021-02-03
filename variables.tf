@@ -424,3 +424,9 @@ variable "default_parameters_enabled" {
   type        = bool
   default     = true
 }
+
+variable "db_cluster_parameter_group_name" {
+  description = "(Optional) A cluster parameter group to associate with the cluster."
+  type        = string
+  default     = null
+}
