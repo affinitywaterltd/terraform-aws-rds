@@ -88,6 +88,7 @@ variable "final_snapshot_identifier" {
 variable "instance_class" {
   description = "The instance type of the RDS instance"
   type        = string
+  default     = "db.t3.medium"
 }
 
 variable "name" {
