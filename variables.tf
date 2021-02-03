@@ -50,6 +50,12 @@ variable "iam_database_authentication_enabled" {
   default     = false
 }
 
+variable "iam_roles" {
+  description = "(Optional) A List of ARNs for the IAM roles to associate to the RDS Cluster."
+  type        = list
+  default     = []
+}
+
 variable "domain" {
   description = "The ID of the Directory Service Active Directory domain to create the instance in"
   type        = string
@@ -138,6 +144,18 @@ variable "availability_zone" {
   description = "The Availability Zone of the RDS instance"
   type        = string
   default     = ""
+}
+
+variable "availability_zones" {
+  description = "The Availability Zones of the RDS instance (Used for RDS Cluster)"
+  type        = list
+  default     = []
+}
+
+variable "backtrack_window" {
+  description = "(Optional) The target backtrack window, in seconds. Only available for aurora engine currently. To disable backtracking, set this value to 0. Defaults to 0. Must be between 0 and 259200 (72 hours)"
+  type        = number
+  default     = 0
 }
 
 variable "multi_az" {
@@ -351,6 +369,12 @@ variable "deletion_protection" {
   description = "The database can't be deleted when this value is set to true."
   type        = bool
   default     = true
+}
+
+variable "engine_mode" {
+  description = "(Optional) The database engine mode. Valid values: global (only valid for Aurora MySQL 1.21 and earlier), multimaster, parallelquery, provisioned, serverless. Defaults to: provisioned. See the RDS User Guide for limitations when using serverless"
+  type        = string
+  default     = "provisioned"
 }
 
 variable "performance_insights_enabled" {

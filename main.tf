@@ -15,6 +15,11 @@ locals {
   max_allocated_storage       = ceil(var.allocated_storage * 1.5) # Rounds up to nearest whole number
 }
 
+locals {
+  is_cluster = contains(["aurora", "aurora-mysql", "aurora-postgresql"],var.engine)
+  
+}
+
 data "aws_kms_alias" "kms_key_rds" {
   name = "alias/aws/rds"
 }
@@ -52,7 +57,7 @@ module "db_parameter_group" {
 module "db_option_group" {
   source = "./modules/db_option_group"
 
-  create                   = local.enable_create_db_option_group
+  create                   = local.is_cluster == false ? local.enable_create_db_option_group : false
   identifier               = var.identifier
   name                     = local.option_group_name
   option_group_description = var.option_group_description
@@ -71,7 +76,7 @@ module "db_option_group" {
 module "db_instance" {
   source = "./modules/db_instance"
 
-  create                = var.create_db_instance
+  create                = local.is_cluster == false ? var.create_db_instance : false
   identifier            = var.identifier
   engine                = var.engine
   engine_version        = var.engine_version
@@ -136,4 +141,101 @@ module "db_instance" {
   delete_automated_backups = var.delete_automated_backups
 
   tags = var.tags
+}
+
+
+
+module "rds_cluster" {
+  source = "./modules/rds_cluster"
+
+  create                = local.is_cluster == true ? var.create_db_instance : false
+  identifier            = var.identifier
+
+  engine                = var.engine
+  engine_mode           = var.engine_mode
+  engine_version        = var.engine_version
+  storage_encrypted     = var.storage_encrypted
+  kms_key_id            = var.kms_key_id == null && var.storage_encrypted == true ? data.aws_kms_alias.kms_key_rds.target_key_id : var.kms_key_id
+
+  name                                = var.name
+  username                            = var.username
+  password                            = var.password
+  port                                = var.port
+  iam_database_authentication_enabled = var.iam_database_authentication_enabled
+  iam_roles                           = var.iam_roles
+
+  snapshot_identifier = var.snapshot_identifier
+
+  vpc_security_group_ids          = var.vpc_security_group_ids
+  db_subnet_group_name            = local.db_subnet_group_name
+  db_cluster_parameter_group_name = var.db_cluster_parameter_group_name 
+
+  availability_zones  = var.availability_zones
+
+  allow_major_version_upgrade = var.allow_major_version_upgrade
+  apply_immediately           = var.apply_immediately
+  skip_final_snapshot         = var.skip_final_snapshot
+  copy_tags_to_snapshot       = var.copy_tags_to_snapshot
+
+  backtrack_window        = var.backtrack_window
+  backup_retention_period = var.backup_retention_period_override == false && var.environment =="prod" ? var.backup_retention_period_production : var.backup_retention_period
+
+  backup_window      = var.backup_window
+  maintenance_window = var.maintenance_window
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+  deletion_protection   = var.deletion_protection
+
+  tags = var.tags
+
+
+
+
+
+  instance_class        = var.instance_class
+  performance_insights_kms_key_id = var.kms_key_id == null && var.storage_encrypted == true ? data.aws_kms_alias.kms_key_rds.target_key_id : var.kms_key_id
+
+  
+  parameter_group_name   = local.parameter_group_name_id
+  
+  multi_az            = var.multi_az
+  iops                = var.iops
+  publicly_accessible = var.publicly_accessible
+
+  ca_cert_identifier = var.ca_cert_identifier
+
+  auto_minor_version_upgrade  = var.auto_minor_version_upgrade
+  
+  
+  
+  performance_insights_enabled          = var.performance_insights_enabled
+  performance_insights_retention_period = var.performance_insights_retention_period
+
+  
+  monitoring_interval     = var.monitoring_interval
+  monitoring_role_arn     = var.monitoring_role_arn == "" ? data.aws_iam_role.rds_enhanced_monitoring_role.arn : var.monitoring_role_arn
+
+  monitoring_role_name    = var.monitoring_role_name
+  create_monitoring_role  = var.create_monitoring_role
+
+  timezone                        = var.timezone
+  character_set_name              = var.character_set_name
+  enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
+
+  timeouts = var.timeouts
+
+  
+  delete_automated_backups = var.delete_automated_backups
+*/
 }
