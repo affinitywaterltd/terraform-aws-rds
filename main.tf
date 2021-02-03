@@ -42,7 +42,7 @@ module "db_subnet_group" {
 module "db_parameter_group" {
   source = "./modules/db_parameter_group"
 
-  create          = var.create_db_parameter_group
+  create          = local.is_cluster == true ? var.create_db_parameter_group : false
   identifier      = var.identifier
   name            = local.parameter_group_name
   description     = var.parameter_group_description

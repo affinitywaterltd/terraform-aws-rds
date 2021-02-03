@@ -6,7 +6,7 @@ variable "identifier" {
 variable "allocated_storage" {
   description = "The allocated storage in gigabytes"
   type        = string
-  default     = null
+  default     = 0
 }
 
 variable "storage_type" {
