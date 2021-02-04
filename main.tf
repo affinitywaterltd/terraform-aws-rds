@@ -5,6 +5,9 @@ locals {
   parameter_group_name    = "${var.engine}-${var.major_engine_version}-rds-parameter-group-${var.identifier}"
   parameter_group_name_id = var.parameter_group_name != "" ? var.parameter_group_name : module.db_parameter_group.this_db_parameter_group_id
 
+  cluster_parameter_group_name    = "${var.engine}-${var.major_engine_version}-rds-parameter-group-${var.identifier}"
+  cluster_parameter_group_name_id = var.parameter_group_name != "" ? var.cluster_parameter_group_name : module.rds_cluster_parameter_group.this_rds_cluster_parameter_group_id
+
   final_snapshot_string         = "${var.identifier}-final"
   final_snapshot_identifier     = var.final_snapshot_identifier != null ? var.final_snapshot_identifier : local.final_snapshot_string
   enable_create_db_option_group = var.create_db_option_group ? true : var.option_group_name == "" && var.engine != "postgres"
@@ -168,7 +171,7 @@ module "rds_cluster" {
 
   vpc_security_group_ids          = var.vpc_security_group_ids
   db_subnet_group_name            = local.db_subnet_group_name
-  db_cluster_parameter_group_name = local.parameter_group_name
+  db_cluster_parameter_group_name = local.cluster_parameter_group_name_id
 
   availability_zones  = var.availability_zones
 
