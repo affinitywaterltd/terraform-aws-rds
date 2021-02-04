@@ -49,7 +49,7 @@ module "db_parameter_group" {
   identifier      = var.identifier
   name            = local.parameter_group_name
   description     = var.parameter_group_description
-  family          = "${var.engine}-${var.major_engine_version}"
+  family          = local.is_cluster == false ? "${var.engine}-${var.major_engine_version}" : "${var.engine}${var.major_engine_version}"
 
   default_parameters_enabled  = var.default_parameters_enabled
   custom_parameters = var.custom_parameters
