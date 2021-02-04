@@ -206,7 +206,7 @@ module "rds_cluster_parameter_group" {
 
   create          = local.is_cluster == true ? var.create_db_parameter_group : false
   identifier      = var.identifier
-  name            = local.parameter_group_name
+  name            = local.cluster_parameter_group_name
   description     = var.parameter_group_description
   family          = "${var.engine}${var.major_engine_version}"
 
