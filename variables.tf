@@ -136,6 +136,12 @@ variable "parameter_group_name" {
   default     = ""
 }
 
+variable "cluster_parameter_group_name" {
+  description = "Name of the DB parameter group to associate or create"
+  type        = string
+  default     = ""
+}
+
 variable "option_group_name" {
   description = "Name of the DB option group to associate"
   type        = string
