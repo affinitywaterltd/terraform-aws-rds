@@ -202,6 +202,12 @@ variable "auto_minor_version_upgrade" {
   default     = false
 }
 
+variable "parameter_group_name" {
+  description = "Name of the DB parameter group to associate"
+  type        = string
+  default     = ""
+}
+
 locals {
   default_instance_class = "db.t3.medium"
   default_monitoring_interval = 60

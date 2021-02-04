@@ -63,7 +63,7 @@ resource "aws_rds_cluster_instance" "this" {
   publicly_accessible  = var.publicly_accessible
   db_subnet_group_name = var.db_subnet_group_name
   monitoring_role_arn  = var.monitoring_role_arn
-  db_parameter_group_name = var.db_cluster_parameter_group_name 
+  db_parameter_group_name = var.parameter_group_name 
 
   auto_minor_version_upgrade  = var.auto_minor_version_upgrade
   apply_immediately           = var.apply_immediately

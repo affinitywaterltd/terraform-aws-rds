@@ -5,7 +5,7 @@ locals {
   parameter_group_name    = "${var.engine}-${var.major_engine_version}-rds-parameter-group-${var.identifier}"
   parameter_group_name_id = var.parameter_group_name != "" ? var.parameter_group_name : module.db_parameter_group.this_db_parameter_group_id
 
-  cluster_parameter_group_name    = "${var.engine}-${var.major_engine_version}-rds-parameter-group-${var.identifier}"
+  cluster_parameter_group_name    = "${var.engine}-${var.major_engine_version}-rds-cluster-parameter-group-${var.identifier}"
   cluster_parameter_group_name_id = var.parameter_group_name != "" ? var.cluster_parameter_group_name : module.rds_cluster_parameter_group.this_rds_cluster_parameter_group_id
 
   final_snapshot_string         = "${var.identifier}-final"
@@ -45,7 +45,7 @@ module "db_subnet_group" {
 module "db_parameter_group" {
   source = "./modules/db_parameter_group"
 
-  create          = local.is_cluster == false ? var.create_db_parameter_group : false
+  create          = var.create_db_parameter_group
   identifier      = var.identifier
   name            = local.parameter_group_name
   description     = var.parameter_group_description
@@ -191,6 +191,7 @@ module "rds_cluster" {
   cluster_instances           = var.cluster_instances
   publicly_accessible         = var.publicly_accessible
   auto_minor_version_upgrade  = var.auto_minor_version_upgrade
+  parameter_group_name        = local.parameter_group_name_id
 
   monitoring_role_arn     = var.monitoring_role_arn == "" ? data.aws_iam_role.rds_enhanced_monitoring_role.arn : var.monitoring_role_arn
 
