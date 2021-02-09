@@ -116,7 +116,7 @@ module "db_instance" {
   ca_cert_identifier = var.ca_cert_identifier
 
   allow_major_version_upgrade = var.allow_major_version_upgrade
-  auto_minor_version_upgrade  = var.auto_minor_version_upgrade
+  auto_minor_version_upgrade  = var.auto_minor_version_upgrade_override == false && var.environment =="prod" ? var.auto_minor_version_upgrade_production : var.auto_minor_version_upgrade
   apply_immediately           = var.apply_immediately
   maintenance_window          = var.maintenance_window
   skip_final_snapshot         = var.skip_final_snapshot
@@ -190,7 +190,7 @@ module "rds_cluster" {
   # Instance level settings
   cluster_instances           = var.cluster_instances
   publicly_accessible         = var.publicly_accessible
-  auto_minor_version_upgrade  = var.auto_minor_version_upgrade
+  auto_minor_version_upgrade  = var.auto_minor_version_upgrade_override == false && var.environment =="prod" ? var.auto_minor_version_upgrade_production : var.auto_minor_version_upgrade
   parameter_group_name        = local.parameter_group_name_id
 
   monitoring_role_arn     = var.monitoring_role_arn == "" ? data.aws_iam_role.rds_enhanced_monitoring_role.arn : var.monitoring_role_arn

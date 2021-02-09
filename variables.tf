@@ -214,7 +214,19 @@ variable "allow_major_version_upgrade" {
   default     = false
 }
 
+variable "auto_minor_version_upgrade_override" {
+  description = "Determined if the defaultauto monior version upgrade is applied or use the specified value"
+  type        = bool
+  default     = false
+}
+
 variable "auto_minor_version_upgrade" {
+  description = "Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window"
+  type        = bool
+  default     = true
+}
+
+variable "auto_minor_version_upgrade_production" {
   description = "Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window"
   type        = bool
   default     = false
@@ -352,7 +364,7 @@ variable "character_set_name" {
 variable "enabled_cloudwatch_logs_exports" {
   description = "List of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. Valid values (depending on engine): alert, audit, error, general, listener, slowquery, trace, postgresql (PostgreSQL), upgrade (PostgreSQL)."
   type        = list(string)
-  default     = []
+  default     = ["alert", "audit"]
 }
 
 variable "timeouts" {
