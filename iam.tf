@@ -43,6 +43,7 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "this_admin" {
+  count  = try(lookup(var.admin_role_config, "enabled"), false) ? 1 : 0
   role       = aws_iam_role.this_admin.0.name
   policy_arn = aws_iam_policy.this_admin.0.arn
 }
