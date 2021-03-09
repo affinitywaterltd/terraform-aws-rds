@@ -143,6 +143,8 @@ module "db_instance" {
   deletion_protection      = var.deletion_protection
   delete_automated_backups = var.delete_automated_backups
 
+  s3_integration_role = var.s3_integration_role
+
   tags = var.tags
 }
 

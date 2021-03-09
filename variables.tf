@@ -209,6 +209,12 @@ variable "create_monitoring_role" {
   default     = false
 }
 
+variable "s3_integration_role" {
+  description = "Role to be used by teh S3_INTEGRATION option"
+  type        = string
+  default     = null
+}
+
 variable "allow_major_version_upgrade" {
   description = "Indicates that major version upgrades are allowed. Changing this parameter does not result in an outage and the change is asynchronously applied as soon as possible"
   type        = bool

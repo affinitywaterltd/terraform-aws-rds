@@ -37,6 +37,14 @@ resource "aws_iam_role_policy_attachment" "enhanced_monitoring" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
 }
 
+resource "aws_db_instance_role_association" "s3_integration_role" {
+  count                  = var.s3_integration_role != null ? 1 : 0
+
+  db_instance_identifier = aws_db_instance.this.0.id
+  feature_name           = "S3_INTEGRATION"
+  role_arn               = var.s3_integration_role
+}
+
 resource "aws_db_instance" "this" {
   count = var.create && false == local.is_mssql ? 1 : 0
 

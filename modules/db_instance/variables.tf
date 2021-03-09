@@ -297,3 +297,9 @@ variable "delete_automated_backups" {
   type        = bool
   default     = true
 }
+
+variable "s3_integration_role" {
+  description = "Role to be used by teh S3_INTEGRATION option"
+  type        = string
+  default     = null
+}
