@@ -463,3 +463,11 @@ variable "cluster_instances" {
   type        = any
   default     = []
 }
+
+variable "admin_role_config" {
+  description = "IAM Role for DBA Administration"
+  type        = any
+  default     = {
+    enabled = false
+  }
+}
