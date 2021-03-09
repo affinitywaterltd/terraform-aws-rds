@@ -10,7 +10,7 @@ resource "aws_iam_role" "this_admin" {
 
       "Action": "sts:AssumeRole",
       "Principal": {
-        "Service": ${jsonencode(try(lookup(var.admin_role_config, "assume_role_princpals"), []))}
+        "AWS": ${jsonencode(try(lookup(var.admin_role_config, "assume_role_princpals"), []))}
       },
       "Effect": "Allow",
       "Sid": ""
