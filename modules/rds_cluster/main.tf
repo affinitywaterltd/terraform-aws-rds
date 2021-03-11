@@ -79,7 +79,7 @@ resource "aws_rds_cluster_instance" "this" {
   tags = merge(
     var.tags,
     {
-      "Name" = format("%s", "${var.identifier-count.index+1}")
+      "Name" = format("%s", "${var.identifier}-${count.index+1}")
     },
   )
 
