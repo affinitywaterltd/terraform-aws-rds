@@ -76,4 +76,11 @@ resource "aws_rds_cluster_instance" "this" {
   availability_zone    = lookup(element(var.cluster_instances, count.index), "availability_zone", null)
   performance_insights_enabled = lookup(element(var.cluster_instances, count.index), "performance_insights_enabled", local.default_performance_insights_enabled)
 
+  tags = merge(
+    var.tags,
+    {
+      "Name" = format("%s", "${var.identifier-count.index+1}")
+    },
+  )
+
 }
